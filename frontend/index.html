@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Canteen Management System</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <h1>🍽️ Campus Canteen</h1>
+      <div class="header-actions">
+        <button id="ordersBtn" class="orders-btn">Orders</button>
+        <button id="cartBtn" class="cart-btn">
+          Cart <span id="cartCount">0</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Category filter -->
+    <div class="filters">
+      <input type="text" id="searchInput" placeholder="Search menu..." />
+      <select id="categoryFilter">
+        <option value="">All Categories</option>
+        <option value="Cakes">Cakes</option>
+        <option value="Snacks">Snacks</option>
+        <option value="Beverages">Beverages</option>
+        <option value="Meals">Meals</option>
+      </select>
+      <button id="addItemBtn" class="add-item-btn">+ Add Menu Item</button>
+    </div>
+
+    <!-- Menu grid -->
+    <main id="menuGrid" class="menu-grid">
+      <!-- menu items inserted here by JS -->
+    </main>
+    <p id="emptyMessage" class="empty-message hidden">No menu items found.</p>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Your Cart</h2>
+          <button id="closeCart" class="close-btn">&times;</button>
+        </div>
+        <div id="cartItems" class="cart-items">
+          <!-- cart line items inserted here -->
+        </div>
+        <div class="cart-total">
+          Total: ₹<span id="cartTotal">0</span>
+        </div>
+        <form id="checkoutForm">
+          <input type="text" id="customerName" placeholder="Your name" required />
+
+          <div class="payment-options">
+            <label class="payment-option">
+              <input type="radio" name="paymentMethod" value="cash" checked />
+              Cash at counter
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="paymentMethod" value="upi" />
+              UPI
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="paymentMethod" value="card" />
+              Card
+            </label>
+          </div>
+
+          <button type="submit" class="checkout-btn">Place Order</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Add Menu Item Modal -->
+    <div id="addItemModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Add Menu Item</h2>
+          <button id="closeAddItem" class="close-btn">&times;</button>
+        </div>
+        <form id="addItemForm">
+          <label>Name</label>
+          <input type="text" name="name" required placeholder="e.g. Chocolate Cake" />
+
+          <label>Category</label>
+          <select name="category" required>
+            <option value="Cakes">Cakes</option>
+            <option value="Snacks">Snacks</option>
+            <option value="Beverages">Beverages</option>
+            <option value="Meals">Meals</option>
+          </select>
+
+          <label>Price (₹)</label>
+          <input type="number" name="price" required min="0" step="0.01" />
+
+          <label>Stock</label>
+          <input type="number" name="stock" required min="0" value="10" />
+
+          <label>Description</label>
+          <textarea name="description" rows="2"></textarea>
+
+          <label>Image</label>
+          <input type="file" name="image" accept="image/*" />
+
+          <button type="submit" class="checkout-btn">Add Item</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Orders Modal -->
+    <div id="ordersModal" class="modal hidden">
+      <div class="modal-content orders-modal-content">
+        <div class="modal-header">
+          <h2>Order History</h2>
+          <button id="closeOrders" class="close-btn">&times;</button>
+        </div>
+        <div class="orders-filter">
+          <select id="orderStatusFilter">
+            <option value="">All Statuses</option>
+            <option value="pending">Pending</option>
+            <option value="preparing">Preparing</option>
+            <option value="ready">Ready</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+        <div id="ordersList" class="orders-list">
+          <!-- orders inserted here by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Menu Item Modal -->
+    <div id="editItemModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Edit Menu Item</h2>
+          <button id="closeEditItem" class="close-btn">&times;</button>
+        </div>
+        <form id="editItemForm">
+          <input type="hidden" name="itemId" />
+
+          <label>Name</label>
+          <input type="text" name="name" required />
+
+          <label>Category</label>
+          <select name="category" required>
+            <option value="Cakes">Cakes</option>
+            <option value="Snacks">Snacks</option>
+            <option value="Beverages">Beverages</option>
+            <option value="Meals">Meals</option>
+          </select>
+
+          <label>Price (₹)</label>
+          <input type="number" name="price" required min="0" step="0.01" />
+
+          <label>Stock</label>
+          <input type="number" name="stock" required min="0" />
+
+          <label>Description</label>
+          <textarea name="description" rows="2"></textarea>
+
+          <label>Replace Image (optional)</label>
+          <input type="file" name="image" accept="image/*" />
+
+          <button type="submit" class="checkout-btn">Save Changes</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Payment Processing Overlay -->
+    <div id="paymentOverlay" class="modal hidden">
+      <div class="payment-processing-box">
+        <div class="spinner"></div>
+        <p id="paymentStatusText">Processing payment...</p>
+      </div>
+    </div>
+
+    <!-- Order confirmation toast -->
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
